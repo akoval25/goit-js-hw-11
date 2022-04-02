@@ -7,7 +7,7 @@ export default class CardService {
   fetchCards() {
   const key = "18248477-7327d67041c585aa7c82bab30";
 
-  const url = `https://pixabay.com/api/?key=${key}&q=${this.searchData}&page=${this.page}&per_page=10`;
+  const url = `https://pixabay.com/api/?key=${key}&q=${this.searchData}&page=${this.page}&per_page=8`;
 
   return fetch(url)
     .then(r => r.json())

@@ -39,6 +39,10 @@
 
 .gallery {
   margin-top: 80px;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 
 .btn {
@@ -51,4 +55,29 @@
   color: #fff;
   border-radius: 4px;
   padding: 10px 20px;
+  margin-bottom: 30px;
+}
+
+.photo-card {
+  width: 300px;
+  box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+  margin: 15px;
+}
+
+.photo {
+  width: 100%;
+  height: 250px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.info {
+  padding: 5px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.info-item {
+  font-size: 14px;
+  margin-right: 8px;
 }
