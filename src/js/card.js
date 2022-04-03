@@ -1,3 +1,4 @@
+import Notiflix from 'notiflix';
 export default class CardService {
   constructor() { 
     this.searchData = '';
@@ -13,10 +14,11 @@ export default class CardService {
     .then(r => r.json())
     .then(data => {
       this.incrementPage();
-
       return data.hits;
   });
   }
+
+  
 
   incrementPage() {
     this.page += 1;

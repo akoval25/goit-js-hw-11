@@ -17,11 +17,7 @@ const loadMoreBtn = new LoadMoreBtn({
 });
 const cardService = new CardService();
 
-
-
-
 formRef.addEventListener('submit', onSearch);
-// btnRef.addEventListener('click', onLoadMore);
 loadMoreBtn.refs.button.addEventListener('click', fetchHits);
 
 function onSearch(e) {
@@ -38,6 +34,8 @@ function onSearch(e) {
     return Notiflix.Notify.failure('Введить щось');
   }
 
+
+
   loadMoreBtn.show();
   cardService.resetPage();
   fetchHits();
@@ -45,7 +43,12 @@ function onSearch(e) {
 
 function fetchHits() {
   loadMoreBtn.disable();
-  cardService.fetchCards().then(hits => {
+  cardService.fetchCards()
+  .then(hits => {
+    if (hits.length === 0) {
+      console.log("error");
+      return Notiflix.Notify.failure('☠️ Нічого такого не знайшли');
+    } 
     appendCardsMarkup(hits);
     loadMoreBtn.enable();
     });
@@ -53,30 +56,12 @@ function fetchHits() {
 
 function appendCardsMarkup(hits) {
   galleryRef.insertAdjacentHTML('beforeend', cardTpl(hits));
+  return Notiflix.Notify.success('👻 Що маємо, то маємо!');
 }
 
 function clearCardsContainer() {
   galleryRef.innerHTML = '';
 }
-
-/* <div class="photo-card">
-  <img src="" alt="" loading="lazy" />
-  <div class="info">
-    <p class="info-item">
-      <b>Likes</b>
-    </p>
-    <p class="info-item">
-      <b>Views</b>
-    </p>
-    <p class="info-item">
-      <b>Comments</b>
-    </p>
-    <p class="info-item">
-      <b>Downloads</b>
-    </p>
-  </div>
-</div> */
-
 
 // Notiflix.Notify.success('Sol lucet omnibus');
 
@@ -89,4 +74,4 @@ function clearCardsContainer() {
 //     console.error(error);
 //   }
 // }
-// var lightbox = new SimpleLightbox('.gallery a', { captionsData: 'alt', captionDelay: 250 });
+ var lightbox = new SimpleLightbox('.gallery .photo-card img', { captionsData: 'alt', captionDelay: 250 });
