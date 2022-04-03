@@ -24,6 +24,7 @@ function onSearch(e) {
     elements: { searchQuery }
   } = e.currentTarget;
   
+  clearCardsContainer();
   cardService.query = searchQuery.value;
   cardService.resetPage();
   cardService.fetchCards().then(appendCardsMarkup);
@@ -38,6 +39,9 @@ function appendCardsMarkup(hits) {
   galleryRef.insertAdjacentHTML('beforeend', cardTpl(hits));
 }
 
+function clearCardsContainer() {
+  galleryRef.innerHTML = '';
+}
 
 /* <div class="photo-card">
   <img src="" alt="" loading="lazy" />
