@@ -5,17 +5,24 @@ import Notiflix from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import CardService from './js/card';
-// import cardTpl from './js/cards';
+import LoadMoreBtn from './js/load-more-btn';
 import cardTpl from './templates/cards.hbs';
 
 const formRef = document.querySelector('.search-form');
 const galleryRef = document.querySelector('.gallery');
 const btnRef = document.querySelector('.btn');
+const loadMoreBtn = new LoadMoreBtn({
+  selector: '[data-action="load-more"]',
+  hidden: true,
+});
 const cardService = new CardService();
 
 
+
+
 formRef.addEventListener('submit', onSearch);
-btnRef.addEventListener('click', onLoadMore);
+// btnRef.addEventListener('click', onLoadMore);
+loadMoreBtn.refs.button.addEventListener('click', fetchHits);
 
 function onSearch(e) {
   e.preventDefault();
@@ -26,13 +33,22 @@ function onSearch(e) {
   
   clearCardsContainer();
   cardService.query = searchQuery.value;
+
+  if (cardService.query === '') {
+    return Notiflix.Notify.failure('Введить щось');
+  }
+
+  loadMoreBtn.show();
   cardService.resetPage();
-  cardService.fetchCards().then(appendCardsMarkup);
+  fetchHits();
 }
 
-function onLoadMore(e) {
-  e.preventDefault();
-  cardService.fetchCards().then(appendCardsMarkup);
+function fetchHits() {
+  loadMoreBtn.disable();
+  cardService.fetchCards().then(hits => {
+    appendCardsMarkup(hits);
+    loadMoreBtn.enable();
+    });
 }
 
 function appendCardsMarkup(hits) {

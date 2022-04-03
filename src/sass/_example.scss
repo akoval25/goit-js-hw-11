@@ -83,3 +83,11 @@
   font-size: 14px;
   margin-right: 8px;
 }
+
+.button.is-hidden {
+  display: none;
+}
+
+.button > .spinner.is-hidden {
+  display: none;
+}
