@@ -34,8 +34,6 @@ function onSearch(e) {
     return Notiflix.Notify.failure('Введить щось');
   }
 
-
-
   loadMoreBtn.show();
   cardService.resetPage();
   fetchHits();
@@ -46,7 +44,7 @@ function fetchHits() {
   cardService.fetchCards()
   .then(hits => {
     if (hits.length === 0) {
-      console.log("error");
+      loadMoreBtn.hide();
       return Notiflix.Notify.failure('☠️ Нічого такого не знайшли');
     } 
     appendCardsMarkup(hits);
