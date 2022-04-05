@@ -12,6 +12,7 @@ export default class CardService {
 
     return axios.get(url)
     .then(response => {
+      this.incrementPage();
       return response.data;
     });
   }
