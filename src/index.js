@@ -30,7 +30,7 @@ function onSearch(e) {
   clearCardsContainer();
   cardService.query = searchQuery.value;
 
-  if (cardService.query === '') {
+  if (cardService.query.trim() === '') {
     return Notiflix.Notify.failure('Введить щось');
   }
 
@@ -42,19 +42,19 @@ function onSearch(e) {
 function fetchHits() {
   loadMoreBtn.disable();
   cardService.fetchCards()
-  .then(hits => {
-    if (hits.length === 0) {
+  .then(data => {
+    if (data.hits.length === 0) {
       loadMoreBtn.hide();
       return Notiflix.Notify.failure('☠️ Нічого такого не знайшли');
     } 
-    appendCardsMarkup(hits);
+    appendCardsMarkup(data);
     loadMoreBtn.enable();
     });
 }
 
-function appendCardsMarkup(hits) {
-  galleryRef.insertAdjacentHTML('beforeend', cardTpl(hits));
-  return Notiflix.Notify.success('👻 Що маємо, то маємо!');
+function appendCardsMarkup(data) {
+  galleryRef.insertAdjacentHTML('beforeend', cardTpl(data.hits));
+  return Notiflix.Notify.success(`👻 Що маємо, то маємо! А маємо ${data.total} зображень...`);
 }
 
 function clearCardsContainer() {
